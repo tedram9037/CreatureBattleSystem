@@ -2,6 +2,11 @@ public class Creature {
     public float health;
     public String name;
     public String action;
+    public String moveType;
+    public int atkUses1;
+    public int atkUses2;
+    public int atkUses3;
+    public int atkUses4;
 
 
     // Returns the damage done by the Creature
@@ -13,6 +18,11 @@ public class Creature {
             return 0;
         }
 
+        return normalAttack();
+
+    }
+    public float normalAttack() {
+        this.moveType = "Normal";
         // otherwise, do damage between 10-20
         float power = Rand.randomFloat(10, 20);
         action = name + " attacked with power " + power + "!";
@@ -31,7 +41,10 @@ public class Creature {
             action = name + " did not defend.";
         }
 
-        health -= incomingPower;
+        if (moveType.equals("Fire")){
+            health -= incomingPower*0.5;
+        }
+
     }
 
     public String readAction() {
