@@ -21,10 +21,16 @@ public class Creature {
 
     public void defend(float incomingPower) {
 
-        // possibility of % chance of reducing damage taken
+        // 10 % chance of reducing damage taken
         if (Rand.randomInt(0, 10) < 1) {
             incomingPower = incomingPower * 0.8f;
+            action = name + " defended and reduced damage taken to " + incomingPower;
         }
+        else
+        {
+            action = name + " did not defend.";
+        }
+
         health -= incomingPower;
     }
 

@@ -6,6 +6,7 @@ public class BattleSystem {
             float attackPower = a.attack();
             b.defend(attackPower);
             System.out.println(a.readAction());
+            System.out.println(b.readAction());
 
             System.out.println(a);
             System.out.println(b);
