@@ -4,6 +4,8 @@ public class    Main {
         // set up the creatures
         Creature a = new Creature();
         Creature b = new Creature();
+        WaterType p = new WaterType();
+
         a.name = "A";
         a.health = 100;
         b.name = "B";
@@ -12,7 +14,9 @@ public class    Main {
         // set up the battle
         BattleSystem battleSystem = new BattleSystem();
 
-        // run the battle
+         //run the battle
         battleSystem.battle(a, b);
+
+
     }
 }

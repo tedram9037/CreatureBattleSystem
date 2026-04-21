@@ -1,16 +1,14 @@
 public class FireType extends Creature{
-    public String type;
 
 
 
     @Override
-    public float normalAttack() {
-        this.moveType = "Fire";
-
+    public void normalAttack() {
+        data.moveType = 3; // 3 means fire
         // 20% chance of missing
         if (Rand.randomInt(0, 10) < 2) {
             action = name + " missed!";
-            return 0;
+            data.power = 0;
         }
 
 
@@ -21,17 +19,17 @@ public class FireType extends Creature{
             case 1:
                 atkUses1 = 10;
                 atkUses1--;
-                power = 10;
+                data.power = 10;
                 break;
             case 2:
                 atkUses2 = 10;
                 atkUses2--;
-                power = 10;
+                data.power = 10;
                 break;
             case 3:
                 atkUses1 = 10;
                 atkUses2--;
-                power = 10;
+                data.power = 10;
                 break;
 
 
@@ -39,8 +37,7 @@ public class FireType extends Creature{
         }
 
 
-        action = name + " attacked with power " + power + "!";
-        return power;
+        action = name + " attacked with a fire type move!" + data.power + "!";
 
     }
 
