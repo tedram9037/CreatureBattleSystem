@@ -1,4 +1,5 @@
 public class AttackData {
     float power;
-    float moveType;
+    String moveType;
+    int miss;
 }

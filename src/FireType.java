@@ -3,42 +3,58 @@ public class FireType extends Creature{
 
 
     @Override
-    public void normalAttack() {
-        data.moveType = 3; // 3 means fire
-        // 20% chance of missing
-        if (Rand.randomInt(0, 10) < 2) {
-            action = name + " missed!";
-            data.power = 0;
+    public AttackData normalAttack() {
+        AttackData fireAttack = new AttackData();
+        fireAttack.moveType = "Fire";
+        boolean doneAttack = false;
+        while (!doneAttack){
+            int move = Rand.randomInt(1,4);
+            if (Rand.randomInt(0, 10) < 2) {
+                action = name + " missed!";
+                fireAttack.power = 0;
+            }
+            switch (move) {
+                case 1:
+                    if (atkUses1 > 0) {
+                        this.atkUses1--;
+                        fireAttack.power = 10;
+                        doneAttack = true;
+                    }
+                    break;
+                case 2:
+                    if (atkUses2 > 0) {
+                        this.atkUses1--;
+                        fireAttack.power = 10;
+                        doneAttack = true;
+                    }
+                    break;
+                case 3:
+                    if (atkUses3 > 0) {
+                        this.atkUses1--;
+                        fireAttack.power = 10;
+                        doneAttack = true;
+                    }
+                    break;
+            }
         }
 
 
-        int move = Rand.randomInt(1,4);
-        float power = 1;
+        action = name + " attacked with a fire type move!";
 
-        switch (move) {
-            case 1:
-                atkUses1 = 10;
-                atkUses1--;
-                data.power = 10;
-                break;
-            case 2:
-                atkUses2 = 10;
-                atkUses2--;
-                data.power = 10;
-                break;
-            case 3:
-                atkUses1 = 10;
-                atkUses2--;
-                data.power = 10;
-                break;
-
-
-
+        return fireAttack;
+    }
+    @Override
+    public void dmgAmplifier(AttackData incomingPower) {
+        if (incomingPower.moveType.equals("Water")){
+            health -= incomingPower.power * 5;
+            action = name + " is weak against water!";
         }
-
-
-        action = name + " attacked with a fire type move!" + data.power + "!";
-
+        else if (incomingPower.miss == 1) {
+            action = "Opponent missed!";
+        }
+        else {
+            action = name + " did not defend.";
+        }
     }
 
 

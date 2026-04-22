@@ -1,41 +1,52 @@
 public class WaterType extends Creature{
-
-
-
     @Override
-    public void normalAttack() {
-        data.moveType = 1; // 1 means water
+    public AttackData normalAttack() {
+        AttackData waterAttack = new AttackData();
+        waterAttack.moveType = "Water";
+        boolean doneAttack = false;
 
-        // 20% chance of missing
-        if (Rand.randomInt(0, 10) < 2) {
-            action = name + " missed!";
-            data.power = 0;
+        while (!doneAttack){
+            int move = Rand.randomInt(1,4);
+            if (Rand.randomInt(0, 10) < 2) {
+                action = name + " missed!";
+                waterAttack.power = 0;
+            }
+            switch (move) {
+                case 1:
+                    if (atkUses1 > 0) {
+                        this.atkUses1--;
+                        waterAttack.power = 10;
+                        doneAttack = true;
+                    }
+                    break;
+                case 2:
+                    if (atkUses2 > 0) {
+                        this.atkUses1--;
+                        waterAttack.power = 10;
+                        doneAttack = true;
+                    }
+                    break;
+                case 3:
+                    if (atkUses3 > 0) {
+                        this.atkUses1--;
+                        waterAttack.power = 10;
+                        doneAttack = true;
+                    }
+                    break;
+            }
         }
-        int move = Rand.randomInt(1,4);
-        float power = 1;
-
-        switch (move) {
-            case 1:
-                atkUses1--;
-                data.power = 10;
-                break;
-            case 2:
-                atkUses2--;
-                data.power = 10;
-                break;
-            case 3:
-                atkUses3--;
-                data.power = 10;
-                break;
-        }
-
-
-        action = name + " attacked with a water type move! " + power + "!";
+        action = name + " attacked with a water type move!";
+        return waterAttack;
     }
+
     @Override
     public void dmgAmplifier(AttackData incomingPower) {
-        if (incomingPower.moveType == 4){
+        if (incomingPower.moveType.equals("Fire")){
             health -= incomingPower.power * 0.5F;
+            action = name + " is strong against fire!";
+        }
+        else if (incomingPower.miss == 1) {
+            action = "Opponent missed!";
         }
         else {
             action = name + " did not defend.";
