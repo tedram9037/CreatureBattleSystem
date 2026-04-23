@@ -1,5 +1,5 @@
 public class Creature {
-    public float health;
+    private float health;
     public String name;
     public String action;
     public int atkUses1 = 30;
@@ -7,6 +7,13 @@ public class Creature {
     public int atkUses3 = 10;
     public int atkUses4 = 5;
 
+    public float getHealth() {
+        return health;
+    }
+
+    public Creature(float health) {
+        this.health = health;
+    }
 
     // Returns the damage done by the Creature
     public AttackData attack() {
@@ -34,12 +41,12 @@ public class Creature {
     }
 
 
-    public void defend(AttackData incomingPower) {
+    public void defend(AttackData incomingPower, float health) {
 
         // 10 % chance of reducing damage taken
         if (Rand.randomInt(0, 10) < 1) {
             float reduce = incomingPower.power * 0.8f;
-            this.health -= reduce;
+            health -= reduce;
             action = name + " defended and reduced damage taken to " + reduce;
         }
         else
@@ -59,7 +66,7 @@ public class Creature {
         }
         else {
             action = name + " did not defend.";
-            this.health -= incomingPower.power;
+            health -= incomingPower.power;
         }
     }
 

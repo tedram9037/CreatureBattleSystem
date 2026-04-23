@@ -2,20 +2,16 @@
 void main() {
 
     // set up the creatures
-    Creature a = new Creature();
-    Creature b = new Creature();
-    WaterType p = new WaterType();
-    FireType d = new FireType();
+    Creature a = new Creature(100);
+    Creature b = new Creature(100);
+    WaterType p = new WaterType(100);
+    FireType d = new FireType(100);
 
 
     p.name = "Water Man";
-    p.health = 100;
     d.name = "Fire Man";
-    d.health = 100;
     a.name = "A";
-    a.health = 100;
     b.name = "B";
-    b.health = 100;
 
     // set up the battle
     BattleSystem battleSystem = new BattleSystem();

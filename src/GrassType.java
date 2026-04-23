@@ -1,4 +1,8 @@
 public class GrassType extends  Creature{
+    public GrassType(float health) {
+        super(health);
+    }
+
     @Override
     public AttackData normalAttack() {
         AttackData grassAttack = new AttackData();
@@ -41,7 +45,7 @@ public class GrassType extends  Creature{
     @Override
     public void dmgAmplifier(AttackData incomingPower) {
         if (incomingPower.moveType.equals("Fire")){
-            health -= incomingPower.power * 5;
+            super.health -= incomingPower.power * 5;
             action = name + " is weak against water!";
         }
         else if (incomingPower.miss == 1) {

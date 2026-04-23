@@ -1,4 +1,7 @@
 public class WaterType extends Creature{
+    public WaterType(float health) {
+        super(health);
+    }
     @Override
     public AttackData normalAttack() {
         AttackData waterAttack = new AttackData();

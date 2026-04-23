@@ -1,5 +1,8 @@
 public class FireType extends Creature{
 
+    public FireType(float health) {
+        super(health);
+    }
 
 
     @Override
@@ -44,7 +47,7 @@ public class FireType extends Creature{
         return fireAttack;
     }
     @Override
-    public void dmgAmplifier(AttackData incomingPower) {
+    public void dmgAmplifier(AttackData incomingPower, float health) {
         if (incomingPower.moveType.equals("Water")){
             health -= incomingPower.power * 5;
             action = name + " is weak against water!";
