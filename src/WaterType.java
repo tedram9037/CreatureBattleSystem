@@ -1,6 +1,9 @@
 public class WaterType extends Creature{
-    public WaterType(float health) {
-        super(health);
+    int atkUses1 = 30;
+    int atkUses2 = 20;
+    int atkUses3 = 10;
+    public WaterType(float health, String name) {
+        super(health, name);
     }
     @Override
     public AttackData normalAttack() {
@@ -11,7 +14,8 @@ public class WaterType extends Creature{
         while (!doneAttack){
             int move = Rand.randomInt(1,4);
             if (Rand.randomInt(0, 10) < 2) {
-                action = name + " missed!";
+                String action = getName() + " missed!";
+                updateAction(action);
                 waterAttack.power = 0;
             }
             switch (move) {
@@ -38,21 +42,27 @@ public class WaterType extends Creature{
                     break;
             }
         }
-        action = name + " attacked with a water type move!";
+        String action = getName() + " attacked with a water type move!";
+        updateAction(action);
         return waterAttack;
     }
 
     @Override
     public void dmgAmplifier(AttackData incomingPower) {
         if (incomingPower.moveType.equals("Fire")){
-            health -= incomingPower.power * 0.5F;
-            action = name + " is strong against fire!";
+            float reduce = incomingPower.power * 0.5F;
+            reduceHealth(reduce);
+            String action = getName() + " is strong against fire!";
+            updateAction(action);
         }
         else if (incomingPower.miss == 1) {
-            action = "Opponent missed!";
+            String action = "Opponent missed!";
+            updateAction(action);
         }
         else {
-            action = name + " did not defend.";
+            reduceHealth(incomingPower.power);
+            String action = getName() + " did not defend.";
+            updateAction(action);
         }
     }
 }

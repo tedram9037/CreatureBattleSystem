@@ -1,6 +1,9 @@
 public class GrassType extends  Creature{
-    public GrassType(float health) {
-        super(health);
+    int atkUses1 = 30;
+    int atkUses2 = 20;
+    int atkUses3 = 10;
+    public GrassType(float health, String name) {
+        super(health, name);
     }
 
     @Override
@@ -11,7 +14,8 @@ public class GrassType extends  Creature{
         while (!doneAttack){
             int move = Rand.randomInt(1,4);
             if (Rand.randomInt(0, 10) < 2) {
-                action = name + " missed!";
+                String action = getName() + " missed!";
+                updateAction(action);
                 grassAttack.power = 0;
             }
             switch (move) {
@@ -38,21 +42,26 @@ public class GrassType extends  Creature{
                     break;
             }
         }
-        action = name + " attacked with a fire type move!" + grassAttack.power + "!";
-
+        String action = getName() + " attacked with a fire type move!" + grassAttack.power + "!";
+        updateAction(action);
         return grassAttack;
     }
     @Override
     public void dmgAmplifier(AttackData incomingPower) {
         if (incomingPower.moveType.equals("Fire")){
-            super.health -= incomingPower.power * 5;
-            action = name + " is weak against water!";
+            float reduce = incomingPower.power * 5;
+            reduceHealth(reduce);
+            String action = getName() + " is weak against water!";
+            updateAction(action);
         }
         else if (incomingPower.miss == 1) {
-            action = "Opponent missed!";
+            String action = "Opponent missed!";
+            updateAction(action);
         }
         else {
-            action = name + " did not defend.";
+            reduceHealth(incomingPower.power);
+            String action = getName() + " did not defend.";
+            updateAction(action);
         }
     }
 

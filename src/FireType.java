@@ -1,7 +1,9 @@
-public class FireType extends Creature{
-
-    public FireType(float health) {
-        super(health);
+public class FireType extends Creature {
+    int atkUses1 = 30;
+    int atkUses2 = 20;
+    int atkUses3 = 10;
+    public FireType(float health, String name) {
+        super(health, name);
     }
 
 
@@ -10,10 +12,11 @@ public class FireType extends Creature{
         AttackData fireAttack = new AttackData();
         fireAttack.moveType = "Fire";
         boolean doneAttack = false;
-        while (!doneAttack){
-            int move = Rand.randomInt(1,4);
+        while (!doneAttack) {
+            int move = Rand.randomInt(1, 4);
             if (Rand.randomInt(0, 10) < 2) {
-                action = name + " missed!";
+                String action = getName() + " missed!";
+                updateAction(action);
                 fireAttack.power = 0;
             }
             switch (move) {
@@ -42,23 +45,26 @@ public class FireType extends Creature{
         }
 
 
-        action = name + " attacked with a fire type move!";
+        String action = getName() + " attacked with a fire type move!";
+        updateAction(action);
 
         return fireAttack;
     }
+
     @Override
-    public void dmgAmplifier(AttackData incomingPower, float health) {
-        if (incomingPower.moveType.equals("Water")){
-            health -= incomingPower.power * 5;
-            action = name + " is weak against water!";
-        }
-        else if (incomingPower.miss == 1) {
-            action = "Opponent missed!";
-        }
-        else {
-            action = name + " did not defend.";
+    public void dmgAmplifier(AttackData incomingPower) {
+        if (incomingPower.moveType.equals("Water")) {
+            float reduce = incomingPower.power * 5;
+            reduceHealth(reduce);
+        } else if (incomingPower.miss == 1) {
+            String action = "Opponent missed!";
+            updateAction(action);
+        } else {
+            reduceHealth(incomingPower.power);
+            String action = getName() + " did not defend.";
+            updateAction(action);
         }
     }
-
-
 }
+
+

@@ -1,17 +1,25 @@
 public class Creature {
     private float health;
-    public String name;
-    public String action;
-    public int atkUses1 = 30;
-    public int atkUses2 = 20;
-    public int atkUses3 = 10;
-    public int atkUses4 = 5;
+    private final String name;
+    private String action;
 
+    //getters
     public float getHealth() {
         return health;
     }
+    public String getName() {return name;}
 
-    public Creature(float health) {
+    //methods to update values
+    public void updateAction(String action) {
+        this.action = action;
+    }
+    public void reduceHealth(float reduction) {
+        this.health -= reduction;
+    }
+
+    //constructor
+    public Creature(float health, String name) {
+        this.name = name;
         this.health = health;
     }
 
@@ -22,7 +30,8 @@ public class Creature {
         // 20% chance of missing
         if (Rand.randomInt(0, 10) < 2) {
             creatureAttack.miss = 1; // 1 meaning yes
-            action = name + " missed!";
+            String action = name + " missed!";
+            updateAction(action);
             creatureAttack.power = 0;
             return creatureAttack;
         }
@@ -36,18 +45,20 @@ public class Creature {
         normalAttack.moveType = "Normal"; //2 means normal
 
         normalAttack.power = Rand.randomFloat(10, 20);
-        action = name + " attacked with power " + normalAttack.power + "!";
+        String action = name + " attacked with power " + normalAttack.power + "!";
+        updateAction(action);
         return normalAttack;
     }
 
 
-    public void defend(AttackData incomingPower, float health) {
+    public void defend(AttackData incomingPower) {
 
         // 10 % chance of reducing damage taken
         if (Rand.randomInt(0, 10) < 1) {
             float reduce = incomingPower.power * 0.8f;
-            health -= reduce;
-            action = name + " defended and reduced damage taken to " + reduce;
+            reduceHealth(reduce);
+            String action = name + " defended and reduced damage taken to " + reduce;
+            updateAction(action);
         }
         else
         {
@@ -58,15 +69,14 @@ public class Creature {
     }
 
     public void dmgAmplifier(AttackData incomingPower) {
-        if (incomingPower.moveType.equals("asd")){
-            this.health -= incomingPower.power * 0.5F;
-        }
-        else if (incomingPower.miss == 1) {
-            action = "Oppenent missed!";
+        if (incomingPower.miss == 1) {
+            String action = "Opponent missed!";
+            updateAction(action);
         }
         else {
-            action = name + " did not defend.";
-            health -= incomingPower.power;
+            String action = name + " did not defend.";
+            updateAction(action);
+            reduceHealth(incomingPower.power);
         }
     }
 
